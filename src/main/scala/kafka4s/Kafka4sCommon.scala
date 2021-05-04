@@ -1,12 +1,14 @@
 package kafka4s
 
-import com.sksamuel.avro4s.RecordFormat
-
-case class Customer(name: String, address: String)
-
-case class CustomerId(id: String)
+import org.apache.kafka.clients.admin.NewTopic
 
 object Kafka4sCommon {
-  implicit val CustomerRecordFormat: RecordFormat[Customer] = com.sksamuel.avro4s.RecordFormat[Customer]
-  implicit val CustomerIdRecordFormat: RecordFormat[CustomerId] = com.sksamuel.avro4s.RecordFormat[CustomerId]
+
+  // topic: NewTopic(name=customers.v1, numPartitions=1, replicationFactor=1, replicasAssignments=null, configs=null)
+  val topic = new NewTopic("customers.v1", 1, 1.toShort)
+  val topicName: String = topic.name
+
+  val kafkaBootstrapServers = "localhost:9092"
+  val schemaRegistryUri = "http://localhost:8081"
+
 }

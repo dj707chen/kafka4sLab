@@ -6,8 +6,7 @@ import com.banno.kafka._
 import com.banno.kafka.admin._
 import com.banno.kafka.producer._
 import com.banno.kafka.schemaregistry._
-import kafka4s.Kafka4sCommon.{CustomerIdRecordFormat, CustomerRecordFormat}
-import org.apache.kafka.clients.admin.NewTopic
+import kafka4s.Kafka4sCommon._
 import org.apache.kafka.clients.producer.ProducerRecord
 
 object Kafka4sProducer extends App {
@@ -15,12 +14,6 @@ object Kafka4sProducer extends App {
 
   def send(): Unit = {
     println("\nKafka4sProducer")
-    val topic = new NewTopic("customers.v1", 1, 1.toShort)
-    // topic: NewTopic = (name=customers.v1, numPartitions=1, replicationFactor=1, replicasAssignments=null, configs=null)
-    val topicName = topic.name
-
-    val kafkaBootstrapServers = "localhost:9092"
-    val schemaRegistryUri = "http://localhost:8081"
 
     AdminApi.createTopicsIdempotent[IO](kafkaBootstrapServers, topic :: Nil).unsafeRunSync
 
